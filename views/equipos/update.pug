@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+ a(href='/equipos') Volver
+ br
+ br
+ br
+ h1 Actualizar Equipo
+ br
+ br
+ br
+ form(action=`/equipos/${equipo.id}/update` method='post')
+
+    label(for='id') ID:
+    input#id(type='text' name='id' value=id)
+    br
+    label(for='procesador') Procesador:
+    input#procesador(type='text' name='procesador' value=procesador)
+    br
+    label(for='fuente') Fuente:
+    input#fuente(type='text' name='fuente' value=fuente)
+    br
+    label(for='graphics') Placa de Video:
+    input#graphics(type='text' name='graphics' value=graphics)
+    br
+    label(for='motherboard') Placa Madre:
+    input#motherboard(type='text' name='motherboard' value=motherboard)
+    br
+    label(for='almacenamiento') Almacenamiento:
+    input#almacenamiento(type='text' name='almacenamiento' value=almacenamiento)
+    br
+    label(for='memoriaram') Memoria Ram:
+    input#memoriaram(type='text' name='memoriaram' value=memoria)
+    br
+    label(for='gabinete') Gabinete:
+    input#gabinete(type='text' name='gabinete' value=gabinete)
+    br
+    label(for='disipador') Disipador:
+    input#disipador(type='text' name='disipador' value=disipador)
+    br
+    input.btn(type='submit' value='ok')

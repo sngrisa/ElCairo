@@ -1,0 +1,42 @@
+extends ../layout
+
+block content   
+    h4.pt-3
+    h4.text-center Administracion de equipos
+    a(href='/equipos/create') Añadir un nuevo equipo
+    table.table
+        thead
+         tr
+            th(scope='col') #
+            th(scope='col') Procesador
+            th(scope='col') Fuente
+            th(scope='col') Graphics
+            th(scope='col') Motherboard
+            th(scope='col') Almacenamiento
+            th(scope='col') Memoria Ram
+            th(scope='col') Gabinete
+            th(scope='col') Disipador
+            th(scope='col') 
+            th(scope='col') 
+         tbody
+         tr
+          each equipo in equipos
+           th(scope='row')= equipo.id
+           td=equipo.procesador
+           td=equipo.fuente
+           td=equipo.graphics
+           td=equipo.motherboard
+           td=equipo.almacenamiento
+           td=equipo.memoriaram
+           td=equipo.gabinete
+           td=equipo.disipador
+           td
+            a(href='equipos/'+equipo.id+'/update') Editar
+           td
+               form.inline(method='post' action='equipos/' + equipo.id + '/delete')
+                 input(type='hidden' name='id' value=equipo.id)
+                 button.link-button(type='submit' name='submit_param' value='submit_value' class='btn')
+                 ='Borrar'
+           tr
+           
+           
