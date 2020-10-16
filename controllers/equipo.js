@@ -1,7 +1,7 @@
-var equipo = require ('../models/equipo');
+var Equipos = require ('../models/equipo');
 
 exports.equipo_list = function(req, res){
-    res.render('equipos/index',{equipos: equipo.allpc});
+    res.render('equipos/index',{equipos: Equipos.allpc});
 } 
 
 exports.equipo_create_get = function (req,res){
@@ -9,18 +9,20 @@ exports.equipo_create_get = function (req,res){
 }
 
 exports.equipo_create_post = function (req,res){
-    var pc = new equipo(req.body.id, req.body.procesador, req.body.fuente, req.body.graphics, req.body.motherboard, req.body.almacenamiento, req.body.memoriaram, req.body.gabinete, req.body.disipador);
-    equipo.add(pc);
+    var pc = new Equipos(req.body.id, req.body.procesador, req.body.fuente, req.body.graphics, req.body.motherboard, req.body.almacenamiento, req.body.memoriaram, req.body.gabinete, req.body.disipador);
+    Equipos.add(pc);
     res.redirect('/equipos');
 }
 
 exports.equipo_update_get = function (req,res){
-    var pc = equipo.findById(req.params.id);
+    
+    var pc = Equipos.findById(req.params.id);
+
     res.render('equipos/update', {pc});
 }
 
 exports.equipo_update_post = function (req,res){
-    var pc= equipo.findById(req.params.id);
+    var pc=Equipos.findById(req.params.id);
     pc.id=req.body.id;
     pc.procesador=req.body.procesador;
     pc.fuente=req.body.fuente;
@@ -30,13 +32,13 @@ exports.equipo_update_post = function (req,res){
     pc.memoriaram=req.body.memoriaram;
     pc.gabinete=req.body.gabinete;
     pc.disipador=req.body.disipador;
-    equipo.add(pc);
+
     res.redirect('/equipos');
 }
 
 
 exports.equipo_delete_post = function(req,res){
-    equipo.removeById(req.body.id);
+    Equipos.removeById(req.body.id);
 
     res.redirect('/equipos');
 }

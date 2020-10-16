@@ -1,4 +1,4 @@
-var equipo = function(id, procesador, fuente, graphics, motherboard, almacenamiento, memoriaram, gabinete, disipador){
+var Equipos = function(id, procesador, fuente, graphics, motherboard, almacenamiento, memoriaram, gabinete, disipador){
     this.id= id;
     this.procesador= procesador;
     this.fuente= fuente;
@@ -9,37 +9,39 @@ var equipo = function(id, procesador, fuente, graphics, motherboard, almacenamie
     this.gabinete= gabinete;
     this.disipador= disipador;
 }
-equipo.prototype.toString = function(){
-    return 'id:' +this.id+ "| Procesador:" +this.procesador+ "| Memoria Ram: "+this.memoriaram+ "| Placa de video: "+this.graphics+ "| Gabinete:" +this.gabinete+ "| Disipador:" +this.disipador+ "| Motherboard:" +this.motherboard+ "| Almacenamiento:" +this.almacenamiento+ "|Fuente :" +this.fuente;
+Equipos.prototype.toString = function(){
+    return 'Id:' +this.id+ "| Procesador:" +this.procesador+ "| Fuente: "+this.fuente+ 
+    "| Placa de Video: "+this.graphics+ "| Placa Madre:" +this.motherboard+ "| Almacenamiento :"
+     +this.almacenamiento+ "| Memoria Ram:" +this.memoriaram+ "| Gabinete:" +this.gabinete+ 
+     "|Disipador :" +this.disipador;
 }
 
-equipo.allpc = [];
-equipo.add = function(aPC){
-    equipo.allpc.push(aPC);
+Equipos.allpc = [];
+Equipos.add = function(aPC){
+    Equipos.allpc.push(aPC);
 }
 
-equipo.findById = function(id){
-    var PC = equipo.allpc.find(x => x.id == id);
-    if(PC)
-        return PC;
+var a = new Equipos (1, 'AMD Athlon 200GE', 'Corsair CX550M','Nvidia GTX 1050 ASUS DUAL OC 2GB GDDR5 128 bits',"Asus Prime A320M-K","1TB WD Caviar Blue 7200 RPM HDD","8GB DDR4 2400 Mhz Kingston","Gabinete Generico","AMD Cooler Stock");
+var b = new Equipos (2, 'AMD Athlon 3000G', 'Corsair CX550M','Nvidia GTX 1050 ASUS DUAL OC 2GB GDDR5 128 bits',"Asus Prime A320M-K","1TB WD Caviar Blue 7200 RPM HDD","8GB DDR4 2400 Mhz Kingston","Gabinete Generico","AMD Cooler Stock");
+
+Equipos.add(a);
+Equipos.add(b);
+
+Equipos.findById = function (aPCId){
+    var aPC = Equipos.allpc.find(x => x.id == aPCId);
+    if(aPC)
+        return aPC;
     else
-    throw new Error(`No existe un equipo con el id buscado ${id}`);
+        throw new Error(`No existe un equipo con el id buscado ${aPCId}`);
 }
 
-equipo.removeById= function(aPCId){
-    for(var i=0; i<equipo.allpc.length; i++){
-        if(equipo.allpc[i].id == aPCId){
-            equipo.allpc.splice(i, 1);
+Equipos.removeById= function(aPCId){
+    for(var i=0; i<Equipos.allpc.length; i++){
+        if(Equipos.allpc[i].id == aPCId){
+            Equipos.allpc.splice(i, 1);
             break;
         }
     }
 }
 
-
-var a = new equipo (1, 'AMD Athlon 200GE', 'Corsair CX550M','Nvidia GTX 1050 ASUS DUAL OC 2GB GDDR5 128 bits',"Asus Prime A320M-K","1TB WD Caviar Blue 7200 RPM HDD","8GB DDR4 2400 Mhz Kingston","Gabinete Generico","AMD Cooler Stock");
-var b = new equipo (2, 'AMD Athlon 3000G', 'Corsair CX550M','Nvidia GTX 1050 ASUS DUAL OC 2GB GDDR5 128 bits',"Asus Prime A320M-K","1TB WD Caviar Blue 7200 RPM HDD","8GB DDR4 2400 Mhz Kingston","Gabinete Generico","AMD Cooler Stock");
-
-equipo.add(a);
-equipo.add(b);
-
-module.exports = equipo;
+module.exports = Equipos;
