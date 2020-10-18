@@ -1,4 +1,4 @@
-var Equipos = function(id, procesador, fuente, graphics, motherboard, almacenamiento, memoriaram, gabinete, disipador, ubicacion){
+var Equipos = function(id, procesador, fuente, graphics, motherboard, almacenamiento, memoriaram, gabinete, disipador){
     this.id= id;
     this.procesador= procesador;
     this.fuente= fuente;
@@ -8,14 +8,13 @@ var Equipos = function(id, procesador, fuente, graphics, motherboard, almacenami
     this.memoriaram= memoriaram;
     this.gabinete= gabinete;
     this.disipador= disipador;
-    this.ubicacion=ubicacion;
 }
 
 Equipos.prototype.toString = function(){
     return 'Id:' +this.id+ "| Procesador:" +this.procesador+ "| Fuente: "+this.fuente+ 
     "| Placa de Video: "+this.graphics+ "| Placa Madre:" +this.motherboard+ "| Almacenamiento :"
      +this.almacenamiento+ "| Memoria Ram:" +this.memoriaram+ "| Gabinete:" +this.gabinete+ 
-     "|Disipador :" +this.disipador+ "|Ubicacion del cliente:" +this.ubicacion;
+     "|Disipador :" +this.disipador;
 }
 
 Equipos.allpc = [];
