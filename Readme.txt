@@ -1,4 +1,4 @@
-Bienvenidos a todos a mi proyecyo de El Cairo Servicios Informaticos, (Futuro a llamarse SiG PC Soluctions)
+Bienvenidos a todos a mi proyecto de El Cairo Servicios Informaticos, (Futuro a llamarse SiG PC Soluctions)
 
 Basandome en el ejercicio de las bicicletas se me ocurrio crear una pagina aplicando lo del curso sobre un gestor online
 de armado de equipos informaticos para la ayuda y asesoramiento del armado de las pc.
@@ -17,4 +17,8 @@ Me base en tiendas informaticas para este caso ficticio como ser Gezatek, Mexx C
 
 Si falta algo avisenme y lo agregare lo antes posible.
 
-Atte. Santiago Grisafi 
+Link del proyecto de GitHub: https://github.com/sngrisa/ElCairo
+
+Link de la carpeta del Proyecto: https://github.com/sngrisa/Lamonica4toCurso
+
+Atte. Santiago Grisafi, Analista Universitario de Sistemas de Informacion y Tecnico Superior en Desarrollo de Software Lenguaje Java y base de datos Mysql
