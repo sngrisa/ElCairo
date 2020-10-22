@@ -16,3 +16,19 @@ describe('Equipo API', () => {
         });
     });
 });
+
+describe('POST EQUIPOS /create',() =>{
+    it('STATUS 200', (done) =>{
+        var headers = {'content-type' : 'application.json'};
+        var aPC = {"id": 10, "procesador": 'AMD Ryzen 1300X', "fuente": 'Seasonic Focus Gold Plus 650 Watts 80 plus gold', "graphics": 'Nvidia GTX 1050 TI MSI Gaming X 4GB GDDR5 128 bits OC', "motherboard": 'ASUS Prime A320M-K AM4', "almacenamiento":'1TB WD Caviar Blue 7200 RPM', "memoriaram": '16GB DDR4 2400 Mhz Kingston Hyper Fury X Dual Channel', "gabinete": 'Cooler Master CM 590 III Black', "disipador": 'AMD Cooler Stock'};
+        request.post({
+            headers: headers,
+            url: 'http://localhost:3000/api/equipos/create',
+            body: aPC,
+        }, function(error, response, body){
+            expect(response.statusCode).toBe(200);
+            expect(Equipos.findById(10).procesador).toBe("AMD Athlon 200GE");
+            done();
+        });
+    });
+});
