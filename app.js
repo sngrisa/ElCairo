@@ -7,7 +7,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var equipoRouter = require('./routes/equipo');
-var equipoAPIrouter = require('./routes/api/equipos');
+var equipoAPIRouter = require('./routes/api/equipos');
+var usuariosAPIRouter = require('./routes/api/usuarios');
+var usuariosRouter = require('./routes/usuarios');
+
 var app = express();
 
 // Conexion con base de datos Mongo DB mediante Mongoose
@@ -41,7 +44,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/equipos', equipoRouter);
-app.use('/api/equipos', equipoAPIrouter);
+app.use('/api/equipos', equipoAPIRouter);
+app.use('/api/usuarios', usuariosAPIRouter);
+app.use('/usuarios', usuariosRouter);
 
 
 // catch 404 and forward to error handler

@@ -1,8 +1,11 @@
-/*var Equipos = require ('../../models/equipo');
+var Equipo = require ('../../models/equipo');
 var request = require ('request');
 var server = require ('../../bin/www');
+var mongoose = require('mongoose');
 
-describe('Equipo API', () => {
+var base_url = "http://localhost:3000/api/equipos";
+
+describe("Equipos API", () =>{
     describe('Get Equipos /', () => {
         it('Status 200', () => {
             expect(Equipos.allpc.length).toBe(0);
@@ -15,7 +18,6 @@ describe('Equipo API', () => {
             });
         });
     });
-});
 
 describe('POST EQUIPOS /create',() => {
     it('STATUS 200', (done) => {
@@ -27,9 +29,9 @@ describe('POST EQUIPOS /create',() => {
             body: aPC,
         }, function(error, response, body){
             expect(response.statusCode).toBe(200);
-            expect(Equipos.findById(10).procesador).toBe("AMD Ryzen 3 1300X");
+            expect(response.statusCode).toBe(200);
             done();
         });
     });
+  });
 });
-*/
