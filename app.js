@@ -10,6 +10,24 @@ var equipoRouter = require('./routes/equipo');
 var equipoAPIrouter = require('./routes/api/equipos');
 var app = express();
 
+// Conexion con base de datos Mongo DB mediante Mongoose
+
+const mongoose = require('mongoose');
+var mongodb='mongodb://localhost/equipos';
+mongoose.connect(mongodb, {
+  useNewUrlParser: true,
+ /*  useUnifiedTopology: true,
+  useFindAndModify: true,
+  useCreateIndex: true, */
+});
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Error al conectarse con la base de datos de MongoDB'));
+db.once('open', function() {
+  console.log('Conectado a base de datos de MongoDB, conexion exitosa');
+ // estamos conectados!
+}); 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

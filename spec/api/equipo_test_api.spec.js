@@ -1,4 +1,4 @@
-var Equipos = require ('../../models/equipo');
+/*var Equipos = require ('../../models/equipo');
 var request = require ('request');
 var server = require ('../../bin/www');
 
@@ -32,3 +32,4 @@ describe('POST EQUIPOS /create',() => {
         });
     });
 });
+*/

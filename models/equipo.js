@@ -1,47 +1,55 @@
-var Equipos = function(id, procesador, fuente, graphics, motherboard, almacenamiento, memoriaram, gabinete, disipador){
-    this.id= id;
-    this.procesador= procesador;
-    this.fuente= fuente;
-    this.graphics= graphics;
-    this.motherboard= motherboard;
-    this.almacenamiento= almacenamiento;
-    this.memoriaram= memoriaram;
-    this.gabinete= gabinete;
-    this.disipador= disipador;
-}
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-Equipos.prototype.toString = function(){
-    return 'Id:' +this.id+ "| Procesador:" +this.procesador+ "| Fuente: "+this.fuente+ 
-    "| Placa de Video: "+this.graphics+ "| Placa Madre:" +this.motherboard+ "| Almacenamiento :"
-     +this.almacenamiento+ "| Memoria Ram:" +this.memoriaram+ "| Gabinete:" +this.gabinete+ 
-     "|Disipador :" +this.disipador;
-}
+var EquipoSchema = new Schema({
+    code: Number,
+    procesador: String,
+    fuente: String,
+    graphics: String,
+    motherboard: String,
+    almacenamiento: String,
+    memoriaram: String,
+    gabinete: String,
+    disipador: String,
+});
 
-Equipos.allpc = [];
-Equipos.add = function(aPC){
-    Equipos.allpc.push(aPC);
-}
+EquipoSchema.statics.createInstance = function(code, procesador, 
+                            fuente,graphics,motherboard,almacenamiento,
+                            memoriaram,gabinete,disipador){
+    return new this({
+        code: code,
+        procesador: procesador,
+        fuente: fuente,
+        graphics: graphics,
+        motherboard: motherboard,
+        almacenamiento: almacenamiento,
+        memoriaram: memoriaram,
+        gabinete: gabinete,
+        disipador: disipador
+    });
+};
 
-var a = new Equipos (1, 'AMD Athlon 200GE', 'Corsair CX550M','Nvidia GTX 1050 ASUS DUAL OC 2GB GDDR5 128 bits','Asus Prime A320M-K','1TB WD Caviar Blue 7200 RPM HDD','8GB DDR4 2400 Mhz Kingston','Gabinete Generico','AMD Cooler Stock');
-var b = new Equipos (2, 'AMD Athlon 3000G', 'Corsair CX550M','Nvidia GTX 1050 ASUS DUAL OC 2GB GDDR5 128 bits','Asus Prime A320M-K','1TB WD Caviar Blue 7200 RPM HDD','8GB DDR4 2400 Mhz Kingston','Gabinete Generico','AMD Cooler Stock');
-Equipos.add(a);
-Equipos.add(b);
+EquipoSchema.methods.toString = function(){
+    return 'id:' +this.code+ "| procesador:" +this.procesador+ "| fuente: "+this.fuente+ 
+    "| graphics: "+this.graphics+ "| motherboard:" +this.motherboard+ "| almacenamiento :"
+     +this.almacenamiento+ "| memoriaram:" +this.memoriaram+ "| gabinete:" +this.gabinete+ 
+     "|disipador :" +this.disipador;
+    };
+    
+EquipoSchema.statics.allpc = function (cb){
+    return this.find({}, cb);
+};
+    
+EquipoSchema.statics.add = function (aPC, cb) {
+    this.create(aPC, cb);
+};
 
-Equipos.findById = function (aPCId){
-    var aPC = Equipos.allpc.find(x => x.id == aPCId);
-    if(aPC)
-        return aPC;
-    else
-        throw new Error(`No existe un equipo con el id buscado ${aPCId}`);
-}
+EquipoSchema.statics.findByCode = function (aCode, cb) {
+    return this.findOne({ code: aCode }, cb);
+};
 
-Equipos.removeById= function(aPCId){
-    for(var i=0; i<Equipos.allpc.length; i++){
-        if(Equipos.allpc[i].id == aPCId){
-            Equipos.allpc.splice(i, 1);
-            break;
-        }
-    }
-}
+EquipoSchema.statics.removeByCode = function (aCode, cb) {
+    return this.deleteOne({ code: aCode }, cb); //{} => criterio de filtrado
+};
 
-module.exports = Equipos;
+module.exports = mongoose.model('Equipo', EquipoSchema);
