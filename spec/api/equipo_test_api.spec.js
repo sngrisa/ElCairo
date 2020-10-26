@@ -1,4 +1,4 @@
-var Equipo = require('../../models/equipo2');
+var Equipos = require('../../models/equipo2');
 var request = require('request');
 var server = require('../../bin/www');
 
@@ -6,10 +6,10 @@ describe(' EQUIPOS API', () => {
 
     describe('GET EQUIPOS /', () => {
         it('Status 200', () => {
-            expect(Equipo.allpc.length).toBe(2);
+            expect(Equipos.allpc.length).toBe(0);
 
-            var a = new Equipo(1, 'Intel Core i3 530', 'EVGA 500 W1', 'Nvidia 9600 GSO 512 1,5 GB DDR2 EVGA 192 bits', 'Intel DH55PJ Motherboard', '8GB DDR3 1333 Memox Dual Channel', 'Sentey Gabinete Generico', 'Intel Cooler Stock');
-            Equipo.add(a);
+            var a = new Equipos(1, 'Intel Core i3 530', 'EVGA 500 W1', 'Nvidia 9600 GSO 512 1,5 GB DDR2 EVGA 192 bits', 'Intel DH55PJ Motherboard', '8GB DDR3 1333 Memox Dual Channel', 'Sentey Gabinete Generico', 'Intel Cooler Stock');
+            Equipos.add(a);
             request.get('http://localhost:3000/api/equipos', function (error, response, body) {
                 expect(response.statusCode).toBe(200);
             });
@@ -28,7 +28,7 @@ describe('POST EQUIPOS /create', () => {
             url: 'http://localhost:3000/api/equipos/create',
             body: aPC,
         }, function (err, response, body) {
-            expect(response.statusCode).toBe(500);
+            expect(response.statusCode).toBe(200);
             done();
         });
     });
