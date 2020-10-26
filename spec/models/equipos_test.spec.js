@@ -93,5 +93,29 @@ describe('Testando Equipos', function () {
         });
     });
 
+    describe('Equipo.removeByCode', () => {
+        it('Se deben eliminar los equipos', (done) => {
+          Equipo.allpc(function(err, equipo){
+            expect(equipo.length).toBe(0);
+    
+            var aPC = new Equipo({ code: 1, procesador: "Intel Core i3 4170", fuente: "EVGA 600B 600 Watts 80 plus bronze", graphics: "Nvidia GTX 960 Strix ASUS OC 2GB GDDR5 128 bits", motherboard: "ASUS H81M-A LGA 1150", almacenamiento:"1TB WD Caviar Blue 7200 RPM", memoriaram: "8GB DDR3 1333 Mhz Memox Dual Channel", gabinete: "Sentey Generic Case", disipador: "Cooler Master Hyper EVO 212" });
+            Equipo.add(aPC, function(err, newPC){
+              if(err) console.log(err);
+    
+              var aPC2 = new Equipo({ code: 2, procesador: "Intel Core i3 4170", fuente: "Seasonic S12II 520 Watts 80 plus bronze", graphics: "Nvidia GTX 1050 TI Rog Strix ASUS 4GB GDDR5 128 bits", motherboard: "ASUS H81M-A", memoriaram: "8GB DDR3 1333 Mhz Kingston", gabinete: "Generic Case", disipador: "Cooler Stock" });
+              Equipo.add(aPC2, function(err, newPC2){
+                if(err) console.log(err);
+                Equipo.removeByCode(2, function(error, targetpc){
+                  Equipo.allpc(function(err, equipo){
+                    expect(equipo.length).toBe(1);
+                    done();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+
 
 });
