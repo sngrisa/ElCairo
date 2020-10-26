@@ -5,6 +5,7 @@ var Usuario = require('../../models/usuario');
 
 describe('Testeando Usuarios', function(){
 
+    beforeAll((done) => { mongoose.connection.close(done) });
     beforeEach(function(done){
         var mongodb = 'mongodb://localhost/testdb';
         mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true });

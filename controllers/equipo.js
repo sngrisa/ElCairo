@@ -1,4 +1,4 @@
-var Equipos = require ('../models/equipo');
+var Equipos = require ('../models/equipo2');
 
 exports.equipo_list = function(req, res){
     res.render('equipos/index',{equipos: Equipos.allpc});

@@ -19,9 +19,9 @@ const mongoose = require('mongoose');
 var mongodb='mongodb://localhost/equipos';
 mongoose.connect(mongodb, {
   useNewUrlParser: true,
- /*  useUnifiedTopology: true,
+  useUnifiedTopology: true,
   useFindAndModify: true,
-  useCreateIndex: true, */
+  useCreateIndex: true
 });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

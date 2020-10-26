@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Equipo = require('../../models/equipo');
 
 describe('Testando Equipos', function () {
+    beforeAll((done) => { mongoose.connection.close(done) });
     beforeEach(function (done) {
         var mongodb = 'mongodb://localhost/testdb';
         mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -13,7 +14,6 @@ describe('Testando Equipos', function () {
         });
         done();
     });
-
 
     afterEach(function (done) {
         Equipo.deleteMany({}, function (err, sucess) {
