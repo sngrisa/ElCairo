@@ -1,5 +1,5 @@
 const { restart } = require('nodemon');
-const Equipos = require('../../models/equipo');
+const Equipos = require('../../models/equipo2');
 
 exports.equipo_list = function(req, res){
     res.status(200).json({
