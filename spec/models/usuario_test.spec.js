@@ -41,7 +41,6 @@ describe('Testeando Usuarios', function(){
         it('Debe Existir la reserva', (done) => {
 
             const usuario = new Usuario({
-                code: 1,
                 nombre: 'user',
                 email: 'user@test.com',
                 password: '432394'

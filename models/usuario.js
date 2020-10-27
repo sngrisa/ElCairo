@@ -16,21 +16,22 @@ const validateEmail = function (email) {
     const regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
     return regExp.test(email);
   }
+
 //Modelo Usuario Scehma 
 var usuarioSchema = new Schema({
     nombre: {
-        type:String,
-        trim:true,
-        required:[true,'El nombre es obligatorio']
+        type: String,
+        trim: true,
+        required: [true,'El nombre es obligatorio']
     },
     email:{
-        type:String,
-        trim:true,
-        required:[true,'El email es obligatorio'],
-        lowercase: true,
-        unique:true,
+        type: String,
+        trim: true,
+        required: [true,'El email es obligatorio'],
+        lowercase:  true,
+        unique: true,
         validate: [validateEmail, 'Por favor ingrese un email valido'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/] //valdate in part of moongo
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/] 
     },
     password: {
         type: String,
@@ -73,11 +74,11 @@ usuarioSchema.methods.validPassword = function(password) {
 
 //cb stands for callback
 //We add a method called resrvar
-usuarioSchema.methods.reservar = function (biciId, desde, hasta, cb){
+usuarioSchema.methods.reservar = function (equipoId, desde, hasta, cb){
   //instance of Reserva
     var reserva = new Reserva({
         usuario: this._id,
-        bicicleta: biciId, 
+        equipo: equipoId, 
         desde: desde, 
         hasta: hasta
     });
