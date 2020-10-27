@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//Schema OF Tooken
+
 const TokenSchema = new Schema({
-    //save the Id of User
+
   _userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
