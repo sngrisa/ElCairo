@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Reserva = require('./reserva');
 var Schema = mongoose.Schema;
 const mailer = require('../mailer/mailer');
+var Token = require('./tokenModel');
+var crypto = require('crypto');
 
 
 const uniqueValidator = require('mongoose-unique-validator');
@@ -90,28 +92,28 @@ usuarioSchema.methods.reservar = function (equipoId, desde, hasta, cb){
 
 //we add a method to send email
 usuarioSchema.methods.enviar_email_bienvenida = function(cb) {
-   //We create the token 
-    const token = new Token({_userId: this.id, token: crypto.randomBytes(16).toString('hex')})
-    const email_destination = this.email;
-    token.save((err) => {
-      if ( err ) { return console.log(err.message)}
-      //content of mail
-      const mailOptions = {
-        from: 'no-reply@elcairo.com',
-        to: email_destination,
-        subject: 'Verificacion de cuenta',
-        text: 'Hola,\n\n' 
-        + 'Por favor, para verificar su cuenta haga click en este link: \n' 
-        + 'http://localhost:3000'
-        + '\/token/confirmation\/' + token.token + '\n'
-      }
-  
-      //we send the message and its properties
-      mailer.sendMail(mailOptions, function(err){
-        if( err ) { return console.log(err.message) } 
-        console.log('Se ha enviado un email de bienvenida a: ' + email_destination)
-      })
-    })
-  }
+  //We create the token 
+   const token = new Token({_userId: this.id, token: crypto.randomBytes(16).toString('hex')})
+   const email_destination = this.email;
+   token.save((err) => {
+     if ( err ) { return console.log(err.message)}
+     //content of mail
+     const mailOptions = {
+       from: 'no-reply@elcairo.com',
+       to: email_destination,
+       subject: 'Verificacion de cuenta',
+       text: 'Hola,\n\n' 
+       + 'Por favor, para verificar su cuenta haga click en este link: \n' 
+       + 'http://localhost:3000'
+       + '\/token/confirmation\/' + token.token + '\n'
+     }
+ 
+     //we send the message and its properties
+     mailer.sendMail(mailOptions, function(err){
+       if( err ) { return console.log(err.message) } 
+       console.log('Se ha enviado un email de bienvenida a: ' + email_destination)
+     })
+   })
+ }
 
 module.exports = mongoose.model('Usuario', usuarioSchema);

@@ -71,22 +71,22 @@ we pass the id the user taht we want to update and the new values
           email: req.body.email
         })
       })
-      return
+      return;
     }
 
     Usuario.create({
       nombre: req.body.nombre,
       email: req.body.email,
       password: req.body.password
-    }, (err, nuevoUsuario) => {
+    }, (err, newusuario) => {
       if (err) {
         res.render('usuarios/create', {
           errors: err.errors,
           usuario: new Usuario()
         })
       } else {
-        //we send a email of welcom 
-     //   nuevoUsuario.enviar_email_bienvenida(); //CREATE A ERROR
+        //we send a email of welcome
+        newusuario.enviar_email_bienvenida();
         res.redirect('/usuarios');
       }
     })

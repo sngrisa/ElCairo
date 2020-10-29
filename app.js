@@ -10,6 +10,7 @@ var equipoRouter = require('./routes/equipo');
 var equipoAPIRouter = require('./routes/api/equipos');
 var usuariosAPIRouter = require('./routes/api/usuarios');
 var usuariosRouter = require('./routes/usuarios');
+var tokenRouter = require('./routes/token');
 
 var app = express();
 
@@ -47,6 +48,7 @@ app.use('/equipos', equipoRouter);
 app.use('/api/equipos', equipoAPIRouter);
 app.use('/api/usuarios', usuariosAPIRouter);
 app.use('/usuarios', usuariosRouter);
+app.use('/token', tokenRouter);
 
 
 // catch 404 and forward to error handler
