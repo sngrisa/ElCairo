@@ -42,3 +42,9 @@ exports.equipo_delete_post = function(req,res){
 
     res.redirect('/equipos');
 }
+
+exports.equipo_show_get = function (req, res) {
+    Equipos.findByCode(req.params.code, function (err, pc) {
+        res.render('equipos/show', { pc });
+    });
+}

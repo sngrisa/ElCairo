@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var passport = require('./config/passport');
+var session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var equipoRouter = require('./routes/equipo');
@@ -17,7 +18,7 @@ var app = express();
 // Conexion con base de datos Mongo DB mediante Mongoose
 
 const mongoose = require('mongoose');
-var mongodb='mongodb://localhost/equipos';
+var mongodb=process.env.MONGO_URI || 'mongodb://localhost/equipos';
 mongoose.connect(mongodb, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -26,20 +27,27 @@ mongoose.connect(mongodb, {
 });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'Error al conectarse con la base de datos de MongoDB'));
-db.once('open', function() {
-  console.log('Conectado a base de datos de MongoDB, conexion exitosa');
- // estamos conectados!
-}); 
+db.on('error', console.error.bind(console, 'Error al conectarse con la base de datos de MongoDB')); 
 
-// view engine setup
+//Salvamos la sesion en el servidor
+const store = new session.MemoryStore;
+app.use(session({
+  cookie: {maxAge: 240 * 60 * 60 *100},
+  store: store,
+  saveUninitialized: true,
+  resave: true,
+  secret: 'el_cairo_!!!%&/&____234234'
+})); 
+
+// Vista del setup engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -50,28 +58,28 @@ app.use('/api/usuarios', usuariosAPIRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/token', tokenRouter);
 
-//Handle Routes from app.js
+//Rutas manejadas desde app.js
 app.get('/login', (req, res)=>{
   res.render('session/login')
 })
 
 app.post('/login', (req, res, next)=> {
-  //method of passport
+  //Metodo de Passport
   passport.authenticate('local', (err, user, info)=>{
-    //if there is a error
+    //Se inicia si hay errores
     if(err) return next(err);
-    //if there is not a user , we render login and pass info
+    //Se inicia si hay errores
     if(!usuario) return res.render('session/login', {info});
     req.logIn(usuario, err =>{
       if(err) return next(err);
-      //if everthing is ok redirect to home
+      //Si todo esta bien retorna a la pagina principal
       return res.redirect('/');
     });
   }) (req, res, next);
 })
 
 app.get('/logout', (req, res)=>{
-  req.logOut() //clean the session
+  req.logOut() //Limpia la sesion
   res.redirect('/')
 })
 
@@ -120,12 +128,12 @@ app.post('/resetPassword', (req, res)=>{
   })
 })
 
-// catch 404 and forward to error handler
+// Error 404
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Error handle
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

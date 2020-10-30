@@ -2,8 +2,6 @@ var mongoose = require('mongoose');
 var Reserva = require('./reserva');
 var Schema = mongoose.Schema;
 const mailer = require('../mailer/mailer');
-var Token = require('./tokenModel');
-var crypto = require('crypto');
 
 
 const uniqueValidator = require('mongoose-unique-validator');
@@ -18,22 +16,21 @@ const validateEmail = function (email) {
     const regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
     return regExp.test(email);
   }
-
 //Modelo Usuario Scehma 
 var usuarioSchema = new Schema({
     nombre: {
-        type: String,
-        trim: true,
-        required: [true,'El nombre es obligatorio']
+        type:String,
+        trim:true,
+        required:[true,'El nombre es obligatorio']
     },
     email:{
-        type: String,
-        trim: true,
-        required: [true,'El email es obligatorio'],
-        lowercase:  true,
-        unique: true,
+        type:String,
+        trim:true,
+        required:[true,'El email es obligatorio'],
+        lowercase: true,
+        unique:true,
         validate: [validateEmail, 'Por favor ingrese un email valido'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/] 
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/] //valdate in part of moongo
     },
     password: {
         type: String,
@@ -76,11 +73,11 @@ usuarioSchema.methods.validPassword = function(password) {
 
 //cb stands for callback
 //We add a method called resrvar
-usuarioSchema.methods.reservar = function (equipoId, desde, hasta, cb){
+usuarioSchema.methods.reservar = function (biciId, desde, hasta, cb){
   //instance of Reserva
     var reserva = new Reserva({
         usuario: this._id,
-        equipo: equipoId, 
+        bicicleta: biciId, 
         desde: desde, 
         hasta: hasta
     });
@@ -92,28 +89,28 @@ usuarioSchema.methods.reservar = function (equipoId, desde, hasta, cb){
 
 //we add a method to send email
 usuarioSchema.methods.enviar_email_bienvenida = function(cb) {
-  //We create the token 
-   const token = new Token({_userId: this.id, token: crypto.randomBytes(16).toString('hex')})
-   const email_destination = this.email;
-   token.save((err) => {
-     if ( err ) { return console.log(err.message)}
-     //content of mail
-     const mailOptions = {
-       from: 'no-reply@elcairo.com',
-       to: email_destination,
-       subject: 'Verificacion de cuenta',
-       text: 'Hola,\n\n' 
-       + 'Por favor, para verificar su cuenta haga click en este link: \n' 
-       + 'http://localhost:3000'
-       + '\/token/confirmation\/' + token.token + '\n'
-     }
- 
-     //we send the message and its properties
-     mailer.sendMail(mailOptions, function(err){
-       if( err ) { return console.log(err.message) } 
-       console.log('Se ha enviado un email de bienvenida a: ' + email_destination)
-     })
-   })
- }
+   //We create the token 
+    const token = new Token({_userId: this.id, token: crypto.randomBytes(16).toString('hex')})
+    const email_destination = this.email;
+    token.save((err) => {
+      if ( err ) { return console.log(err.message)}
+      //content of mail
+      const mailOptions = {
+        from: 'no-reply@redbicicletas.com',
+        to: email_destination,
+        subject: 'Verificacion de cuenta',
+        text: 'Hola,\n\n' 
+        + 'Por favor, para verificar su cuenta haga click en este link: \n' 
+        + 'http://localhost:5000'
+        + '\/token/confirmation\/' + token.token + '\n'
+      }
+  
+      //we send the message and its properties
+      mailer.sendMail(mailOptions, function(err){
+        if( err ) { return console.log(err.message) } 
+        console.log('Se ha enviado un email de bienvenida a: ' + email_destination)
+      })
+    })
+  }
 
 module.exports = mongoose.model('Usuario', usuarioSchema);
